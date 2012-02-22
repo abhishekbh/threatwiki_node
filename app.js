@@ -26,20 +26,47 @@ app.configure('production', function(){
   app.use(express.errorHandler());
 });
 
-// Schema
+/////////////////////////////////////////////////////////////////////
+// Schema -> export later on
 var Schema = mongoose.Schema;
 
 var Soc = new Schema({  
-    title: { type: String, required: true },  
-    description: { type: String, required: false },  
-    modified: { type: Date, default: Date.now }
+     title: { type: String, required: true }
+  ,  description: { type: String, required: false }
+  ,  modified: { type: Date, default: Date.now }
 });
 
+var Datapoint = new Schema({
+     title: { type: String, required: true }
+  ,  description: { type: String, required: true }
+  ,  modified: { type: Date, default: Date.now }
+  ,  location: [Location]
+  ,  tag: [Tag]
+  ,  soc: [Soc]
+});
+
+var Location = new Schema({
+     title: { type: String, required: true }
+  ,  latitude: { type: String, required: true }
+  ,  longitude: { type: String, required: true }
+  ,  modified: { type: Date, default: Date.now }
+});
+
+var Tag = new Schema({
+     title: { type: String, required: true }
+  ,  description: { type: String, required: true }
+  ,  modified: { type: Date, default: Date.now }
+  ,  soc: [Soc]
+});
+
+/////////////////////////////////////////////////////////////////////
 var SocModel = mongoose.model('Soc', Soc);
 
 // Server Actions
 app.get('/', routes.index);
 
+// soc mappers -> export
+/////////////////////////////////////////////////////////////////////
 // read a list
 app.get('/api/soc', function (req, res){
   return SocModel.find(function (err, socs) {
@@ -112,6 +139,7 @@ app.delete('/api/socs/:id', function (req, res){
     });
   });
 });
+/////////////////////////////////////////////////////////////////////
 
 // Launch Server
 app.listen(3000); 

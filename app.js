@@ -27,8 +27,7 @@ app.configure('production', function(){
 });
 
 // Schema
-
-var Schema = mongoose.Schema;  
+var Schema = mongoose.Schema;
 
 var Soc = new Schema({  
     title: { type: String, required: true },  
@@ -36,10 +35,9 @@ var Soc = new Schema({
     modified: { type: Date, default: Date.now }
 });
 
-// BusinessLogic
 var SocModel = mongoose.model('Soc', Soc);
 
-// Server Routing
+// Server Actions
 app.get('/', routes.index);
 
 // read a list
@@ -64,7 +62,7 @@ app.post('/api/soc', function (req, res){
     description: req.body.description
   });
 
-  product.save(function (err) {
+  soc.save(function (err) {
     if (!err) {
       return console.log("created");
     } else {
@@ -96,15 +94,15 @@ app.put('/api/soc/:id', function (req, res){
       } else {
         console.log(err);
       }
-      return res.send(product);
+      return res.send(soc1);
     });
   });
 });
 
 // delete by id
-app.delete('/api/products/:id', function (req, res){
-  return ProductModel.findById(req.params.id, function (err, product) {
-    return product.remove(function (err) {
+app.delete('/api/socs/:id', function (req, res){
+  return SocModel.findById(req.params.id, function (err, soc1) {
+    return soc1.remove(function (err) {
       if (!err) {
         console.log("removed");
         return res.send('');

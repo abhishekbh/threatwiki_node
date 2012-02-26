@@ -1,12 +1,16 @@
 var application_root = __dirname,
-  express = require("express"),
   routes = require("./routes"),
   model = require("./model"),
+  express = require("express"),
+  soc_actions = require("./actions/soc_actions"),
+  location_actions = require("./actions/location_actions"),
+  datapoint_actions = require("./actions/datapoint_actions"),
+  tag_actions = require("./actions/tag_actions"),
   mongoose = require('mongoose');
 
 var app = module.exports = express.createServer();
 
-// Database
+// database
 mongoose.connect('mongodb://localhost/namp');
 
 // config
@@ -28,23 +32,21 @@ app.configure('production', function(){
 });
 
 // create model
-model.createModel();
+var createModel = model.createModel();
 var SocModel = model.SocModel;
+var LocationModel = model.LocationModel;
+var DataPointModel = model.DataPointModel;
+var TagModel = model.TagModel;
 
 // routes
 app.get('/', routes.index);
 
-app.get('/api/soc', function (req, res){
-  return SocModel.find(function (err, socs) {
-    if (!err) {
-      return res.send(socs);
-    } else {
-      return console.log(err);
-    }
-  });
-});
+// import socActions
+var socActions = soc_actions.load_socActions(app);
+var locationActions = location_actions.load_locationActions(app);
+var datapointActions = datapoint_actions.load_datapointActions(app);
+var tagActions = tag_actions.load_tagActions(app);
 
 // server listen
-app.listen(3000); 
-console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
-
+app.listen(3000);
+console.log("server's up at %d in %s mode", app.address().port, app.settings.env);

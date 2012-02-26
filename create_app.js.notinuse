@@ -1,0 +1,7 @@
+var express = require("express");
+
+function createApp() {
+  var app = module.exports = express.createServer();
+}
+
+exports.createApp = createApp;

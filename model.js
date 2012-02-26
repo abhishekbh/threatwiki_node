@@ -8,7 +8,7 @@ function createModel() {
     , modified: { type: Date, default: Date.now }
   });
 
-  var Datapoint = new Schema({
+  var DataPoint = new Schema({
       title: { type: String, required: true }
     , description: { type: String, required: true }
     , modified: { type: Date, default: Date.now }

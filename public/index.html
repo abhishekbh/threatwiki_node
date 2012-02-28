@@ -1,0 +1,44 @@
+<html>
+  <head>
+    <title>test util</title>
+  </head>
+  <body>
+    <div id="page-wrap">
+      <div id="get-div"  class="functions">
+        <span>$.get()</span>
+        <input type="submit" value="$.get()" id="get" />
+      </div>
+
+      <div id="post-div" class="functions">
+        <span>$.post()</span>
+        <input type="submit" value="$.post()" id="post" />
+      </div>
+
+      <div id="result"  class="functions"></div>
+    </div>
+
+    <script type="text/javascript" src="jquery.min.js"></script>
+      <script type="text/javascript">
+      // $.post()
+      $("#post").click(function() {
+        jQuery.post("/api/soc", {
+          "title": "Kenya",
+          "description": "Kenya SOC",
+        }, function (data, textStatus, jqXHR) {
+          console.log("Post resposne:"); console.dir(data); console.log(textStatus); console.dir(jqXHR);
+        });
+        $("#result").html("posted");
+	  });
+	  // $.get()
+      $("#get").click(function() {
+        var retVal = jQuery.get("/api/soc/", function (data, textStatus, jqXHR) {
+          console.log("Get resposne:");
+          console.dir(data);
+          console.log(textStatus);
+          console.dir(jqXHR);
+        });
+        $("#result").html(retVal);
+	  });
+    </script>
+  </body>
+</html>

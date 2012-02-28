@@ -30,7 +30,8 @@ function createModel() {
     , modified: { type: Date, default: Date.now }
   });
 
-var SocModel = mongoose.model('Soc', Soc);
+  var SocModel = mongoose.model('Soc', Soc);
+  exports.SocModel = SocModel;
 }
 
 exports.createModel = createModel;

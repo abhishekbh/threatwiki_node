@@ -1,6 +1,7 @@
 var express = require("express");
 
-function load_socActions(app){
+function load_socActions(app, socmodel_inc){
+  var SocModel = socmodel_inc;
   // retrieve all
   app.get('/api/soc', function (req, res){
     return SocModel.find(function (err, socs) {
@@ -34,14 +35,14 @@ function load_socActions(app){
       description: req.body.description
     });
 
-    soc.save(function (err) {
+    soc1.save(function (err) {
       if (!err) {
         return console.log("created");
       } else {
-        return console.log(err);
+        return console.log("!!!Could not Save: " + err);
       }
     });
-    return res.send(soc);
+    return res.send(soc1);
   });
 
   // update

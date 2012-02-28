@@ -17,11 +17,12 @@ mongoose.connect('mongodb://localhost/namp');
 // config
 // we're not using jade right now, we could go back to it at another time
 app.configure(function () {
+  app.set('views', __dirname + '/views');
+  app.set('view engine', 'jade');
   app.use(express.bodyParser());
   app.use(express.methodOverride());
   app.use(app.router);
-  app.use(express.static(path.join(application_root, "public")));
-  app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
+  app.use(express.static(__dirname + '/public'));
 });
 
 app.configure('development', function(){

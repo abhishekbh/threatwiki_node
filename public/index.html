@@ -3,31 +3,47 @@
     <title>test util</title>
   </head>
   <body>
-    <div id="page-wrap">
-      <div id="get-div"  class="functions">
-        <span>$.get()</span>
+    <div id="wrap">
+      Run a console to see JSON data.
+      <br/>Ctrl+Shift+k in Firefox with 'Net' and 'JS' sources enabled
+
+      <hr/>
+      <div id="post_form">
+		<span style="font-weight:bold">New SOC</span>
+        <form id="soc_form">
+          Title<br/>
+          <input type="text" name="title"/><br />
+          Description:<br />
+          <textarea rows="4" cols="60" name="description"></textarea>
+        </form>
+        <div class="post-div">
+          <input type="submit" value="$.post()" id="post" />
+        </div>
+      </div>
+
+      <hr/>
+      <div id="get-div">
         <input type="submit" value="$.get()" id="get" />
       </div>
 
-      <div id="post-div" class="functions">
-        <span>$.post()</span>
-        <input type="submit" value="$.post()" id="post" />
-      </div>
+      <hr/>
+      <span style="font-weight:bold">Status</span>
+      <div id="status" style="margin:0.5em;font-weight:bold"></div>
 
-      <div id="result"  class="functions"></div>
-    </div>
+      <hr/>
+      <span style="font-weight:bold">Data</span>
+      <div id="result" style="margin:0.5em"></div>
 
     <script type="text/javascript" src="jquery.min.js"></script>
       <script type="text/javascript">
       // $.post()
       $("#post").click(function() {
-        jQuery.post("/api/soc", {
-          "title": "Kenya",
-          "description": "Kenya SOC",
-        }, function (data, textStatus, jqXHR) {
+        jQuery.post("/api/soc", $("#soc_form").serialize(), function (data, textStatus, jqXHR) {
           console.log("Post resposne:"); console.dir(data); console.log(textStatus); console.dir(jqXHR);
         });
-        $("#result").html("posted");
+        $("#status").html("posted");
+        //$('#result').html("");
+        $('#result').html($("#soc_form").serialize());
 	  });
 	  // $.get()
       $("#get").click(function() {
@@ -38,6 +54,7 @@
           console.dir(jqXHR);
           $('#result').html(data);
         });
+        $("#status").html("received");
 	  });
     </script>
   </body>

@@ -31,13 +31,13 @@
 	  });
 	  // $.get()
       $("#get").click(function() {
-        var retVal = jQuery.get("/api/soc/", function (data, textStatus, jqXHR) {
+        var data = jQuery.get("/api/soc/", function (data, textStatus, jqXHR) {
           console.log("Get resposne:");
           console.dir(data);
           console.log(textStatus);
           console.dir(jqXHR);
+          $('#result').html(data);
         });
-        $("#result").html(retVal);
 	  });
     </script>
   </body>
